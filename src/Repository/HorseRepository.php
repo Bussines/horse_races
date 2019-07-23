@@ -40,7 +40,11 @@ class HorseRepository extends ServiceEntityRepository
 
     public function generate_random_0_10()
     {
-        return round(((float)rand() / (float)getrandmax())*10,2);
+        do {
+            $randomNumber= round(((float)rand() / (float)getrandmax())*10,2);
+        } while ($randomNumber == 0);
+
+        return $randomNumber;
     }
 
     /**

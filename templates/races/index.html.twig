@@ -77,6 +77,7 @@
         </thead>
         <tbody>
         {% for race in races %}
+            {% set horsePlace = 1 %}
             <tr>
                 <td>
                     {{ race.raceTime }}
@@ -98,7 +99,8 @@
                         {% for horse in race.horses %}
                         <tr>
                             <td>
-                                #{{ horse.horsePosition }}
+                                #{{ horsePlace }}
+                                {% set horsePlace = (horsePlace%8)  + 1 %}
                             </td>
                             <td>
                                 {{ horse.horseName }}

@@ -59,16 +59,16 @@ class RaceHorseRepository extends ServiceEntityRepository
     /**
      * @param $raceId
      * @param $horseId
-     * @param $horsePosition
+     * @param $distanceCovered
      * @param $horseTime
      * @return mixed
      */
-    public function updateHorsePositionInRace($raceId,$horseId,$horsePosition, $horseTime)
+    public function updateHorsePositionInRace($raceId,$horseId,$distanceCovered, $horseTime)
     {
         $result= $this->createQueryBuilder('horseRace')
             ->update()
-            ->set('horseRace.position', ':horsePosition')
-            ->setParameter('horsePosition', $horsePosition)
+            ->set('horseRace.position', ':distanceCovered')
+            ->setParameter('distanceCovered', $distanceCovered)
             ->set('horseRace.time', ':horseTime')
             ->setParameter('horseTime', $horseTime)
             ->where('horseRace.raceId = :raceId')

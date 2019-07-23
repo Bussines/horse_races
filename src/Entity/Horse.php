@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\HorseRepository")
@@ -25,16 +26,34 @@ class Horse
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 10,
+     *      minMessage = "You must be at least {{ limit }}",
+     *      maxMessage = "You cannot be taller than {{ limit }}"
+     * )
      */
     private $speed;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 10,
+     *      minMessage = "You must be at least {{ limit }}",
+     *      maxMessage = "You cannot be taller than {{ limit }}"
+     * )
      */
     private $strength;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 10,
+     *      minMessage = "You must be at least {{ limit }}",
+     *      maxMessage = "You cannot be taller than {{ limit }}"
+     * )
      */
     private $endurance;
 

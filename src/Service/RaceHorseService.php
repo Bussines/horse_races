@@ -115,7 +115,6 @@ class RaceHorseService
             $horseRaceData[$raceId]['horses'][$horseId]['horseDistanceCovered']=$raceHorse['horseDistanceCovered'];
             $horseRaceData[$raceId]['horses'][$horseId]['horseTime']=$raceHorse['horseTime'];
             $horseRaceData[$raceId]['horses'][$horseId]['horseName']=$raceHorse['horseName'];
-            $horseRaceData[$raceId]['horses'][$horseId]['horsePosition']=$key+1;
         }
         return $horseRaceData;
     }
@@ -138,18 +137,23 @@ class RaceHorseService
 
     }
 
+    /**
+     * @param $raceId
+     * @param $horses
+     * @return array
+     */
     public function updateHorsePositions($raceId,$horses)
     {
         foreach ($horses as $horseId=>&$horse)
         {
             $horse=(object)$horse;
-            if($horse->horsePosition==self::RACE_METER_LENGTH)
+            if($horse->horseDistanceCovered>=self::RACE_METER_LENGTH)
             {
                 continue;
             }
             $horseSpeed=$this->horseService->getHorseSpeedById($horseId);
             $horseEndurance = $this->horseService->getHorseEnduranceMetersById($horseId);
-            $nextPosition = (int)($horse->horsePosition + $horseSpeed * self::PROGRESS_TIME);
+            $nextPosition = (int)($horse->horseDistanceCovered + $horseSpeed * self::PROGRESS_TIME);
             $slowedSpeed=$afterEnduranceTime=0;
             if($nextPosition >= $horseEndurance)
             {
@@ -167,8 +171,8 @@ class RaceHorseService
             else{
                 $horse->horseTime+= self::PROGRESS_TIME;
             }
-            $horse->horsePosition = $nextPosition;
-            $this->raceHorseDao->updateHorsePositionInRace($raceId,$horseId,$horse->horsePosition, $horse->horseTime);
+            $horse->horseDistanceCovered = $nextPosition;
+            $this->raceHorseDao->updateHorsePositionInRace($raceId,$horseId,$horse->horseDistanceCovered, $horse->horseTime);
         }
         return (array)$horses;
     }
