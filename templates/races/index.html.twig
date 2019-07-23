@@ -1,0 +1,182 @@
+{% extends '/base.html.twig' %}
+
+{% block title  %} Races {% endblock %}
+
+{% block body %}
+    {# check a boolean that only 3 cuncurrent race can be #}
+
+    <table border=5 bordercolor=red id="bestResult">
+        <thead>
+        <tr>
+            <th colspan="5" style="text-align:center">
+                Best Score
+            </th>
+        </tr>
+        <tr>
+            <th>Horse Name</th>
+            <th>Horse Time(s)</th>
+            <th>Horse Speed(m/s)</th>
+            <th>Horse Strength</th>
+            <th>Horse Endurance</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if bestResult %}
+            <tr>
+                <td style="text-align:center">
+                    {{ bestResult.horseName }}
+                </td>
+                <td style="text-align:center">
+                    {{ bestResult.horseTime }}
+                </td>
+                <td style="text-align:center">
+                    {{ bestResult.horseSpeed }}
+                </td>
+                <td style="text-align:center">
+                    {{ bestResult.horseStrength }}
+                </td>
+                <td style="text-align:center">
+                    {{ bestResult.horseEndurance }}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td style="text-align:center" colspan="5">
+                    No horse finish the race yet
+                </td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    <br><br>
+    {% if is_granted('ROLE_ADMIN')  %}
+        {% if canCreate==true %}
+        <a href="#" id="create-race-btn" class="btn btn-danger create-race">create race</a>
+        {% endif %}
+        {% if races %}
+        <td>
+            <a href="#" id="progress-races-btn" class="btn btn-danger progress-races">Progress</a>
+        </td>
+        {% endif %}
+    {% endif %}
+    <br>
+    <br>
+  {% if races %}
+    <table class="table table-striped" id="currentRaces">
+        <thead>
+        <tr>
+            <th colspan="5" style="text-align:center">
+                Ongoing Race(s)
+            </th>
+        </tr>
+        <tr>
+            <th>Race Time</th>
+            <th>Race Status</th>
+            <th>Horses Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for race in races %}
+            <tr>
+                <td>
+                    {{ race.raceTime }}
+                </td>
+                <td>
+                    {{ race.raceStatus }}
+                </td>
+                <td>
+                    <table border=5 bordercolor=green id="raceHorses">
+                        <thead>
+                        <tr>
+                            <th>Horse Place</th>
+                            <th>Horse Name</th>
+                            <th>Horse Distance Covered(m/s)</th>
+                            <th>Horse Time(s)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for horse in race.horses %}
+                        <tr>
+                            <td>
+                                #{{ horse.horsePosition }}
+                            </td>
+                            <td>
+                                {{ horse.horseName }}
+                            </td>
+                            <td>
+                                {{ horse.horseDistanceCovered }}
+                            </td>
+                            <td>
+                                {{ horse.horseTime }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  {% else %}
+    <p> No race exists</p>
+  {% endif %}
+    {% set raceindex = 1 %}
+    {% set horseIndex = 1 %}
+    {% if finishedRaces %}
+        <br>
+        <br>
+        <table border=2 bordercolor=black class="table table-striped" id="finishedRaces">
+            <thead>
+            <tr>
+                <th colspan="5" style="text-align:center">
+                    5 last finished races results
+                </th>
+            </tr>
+            <tr>
+                <th>Race number</th>
+                <th>Horses Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for finishedRace in finishedRaces %}
+                <tr>
+                    <td>
+                        #{{ raceindex }}
+                        {% set raceindex = (raceindex%5) + 1 %}
+                    </td>
+                    <td>
+                        <table border=5 bordercolor=green id="raceHorses">
+                            <thead>
+                            <tr>
+                                <th>Horse Place</th>
+                                <th>Horse Name</th>
+                                <th>Horse Time(s)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for horse in finishedRace.horses %}
+                                <tr>
+                                    <td>
+                                        #{{ horseIndex }}
+                                        {% set horseIndex = (horseIndex%3)  + 1 %}
+                                    </td>
+                                    <td>
+                                        {{ horse.horseName }}
+                                    </td>
+                                    <td>
+                                        {{ horse.horseTime }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('static/race/race.js')}}"></script>
+{% endblock %}
