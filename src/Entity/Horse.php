@@ -29,8 +29,8 @@ class Horse
      * @Assert\Range(
      *      min = 0,
      *      max = 10,
-     *      minMessage = "You must be at least {{ limit }}",
-     *      maxMessage = "You cannot be taller than {{ limit }}"
+     *      minMessage = "Value must be at least {{ limit }}",
+     *      maxMessage = "Value cannot be greater than {{ limit }}"
      * )
      */
     private $speed;
@@ -40,8 +40,8 @@ class Horse
      * @Assert\Range(
      *      min = 0,
      *      max = 10,
-     *      minMessage = "You must be at least {{ limit }}",
-     *      maxMessage = "You cannot be taller than {{ limit }}"
+     *      minMessage = "Value must be at least {{ limit }}",
+     *      maxMessage = "Value cannot be greater than {{ limit }}"
      * )
      */
     private $strength;
@@ -51,8 +51,8 @@ class Horse
      * @Assert\Range(
      *      min = 0,
      *      max = 10,
-     *      minMessage = "You must be at least {{ limit }}",
-     *      maxMessage = "You cannot be taller than {{ limit }}"
+     *      minMessage = "Value must be at least {{ limit }}",
+     *      maxMessage = "Value cannot be greater than {{ limit }}"
      * )
      */
     private $endurance;
