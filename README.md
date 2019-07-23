@@ -66,4 +66,8 @@ INSTALLATION
     a. php bin/console doctrine:migrations:diff
 
     b. php bin/console doctrine:migrations:migrate
+    
+4- register:
+
+   - the first user registering in the system will be considered as an admin and can create and progress races
         
