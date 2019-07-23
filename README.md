@@ -69,5 +69,5 @@ INSTALLATION
     
 4- register:
 
-   - the first user registering in the system will be considered as an admin and can create and progress races
+   - only the first user registering in the system will be considered as an admin and has an access to create a race or progress button of a races
         
